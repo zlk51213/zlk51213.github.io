@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>linux IO 编程</title>
+      <link href="/2024/07/23/linux%20IO%20%E7%BC%96%E7%A8%8B/"/>
+      <url>/2024/07/23/linux%20IO%20%E7%BC%96%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="系统IO"><a href="#系统IO" class="headerlink" title="系统IO"></a>系统IO</h1><h2 id="文件的概念"><a href="#文件的概念" class="headerlink" title="文件的概念"></a>文件的概念</h2><p>在Linux系统语境下，文件（file）一般有两个基本含义：</p><p>狭义：指普通的文本文件，或二进制文件。包括日常所见的源代码、word文档、压缩包、图片、视频文件等等。<br>广义：除了狭义上的文件外，几乎所有可操作的设备或接口都可视为文件。包括键盘、鼠标、硬盘、串口、触摸屏、显示器等，也包括网络通讯端口、进程间通讯管道等抽象概念。</p><h2 id="Linux系统中文件的分类"><a href="#Linux系统中文件的分类" class="headerlink" title="Linux系统中文件的分类"></a>Linux系统中文件的分类</h2><p>在Linux中，文件总共被分成了7种，他们分别是：</p><p>   普通文件：存在于外部存储器中，用于存储普通数据。<br>   目录文件：用于存放目录项，是文件系统管理的重要文件类型。<br>   管道文件：一种用于进程间通信的特殊文件，也称为命名管道FIFO。<br>   套接字文件：一种用于网络间通信的特殊文件。<br>   链接文件：用于间接访问另外一个目标文件，相当于Windows快捷方式。<br>   字符设备文件：字符设备在应用层的访问接口。<br>   块设备文件：块设备在应用层的访问接口。</p><pre><code> gec@ubuntu:~$ ls -l    -rw-r--r-- 1 gec gec  345  Sep  12:38 a.zip    drwxr-xr-x 2 gec gec 1024  Sep  12:38 dir/    prw-r--r-- 1 gec gec    0  Sep  12:38 pipe     srw-r--r-- 1 gec gec    0  Sep  12:38 socket    lrw-r--r-- 1 gec gec    4  Sep  12:38 link -&gt; a.zip    crw-r--r-- 1 gec gec 1, 3  Sep  12:38 character    brw-r--r-- 1 gec gec 5, 1  Sep  12:38 block</code></pre><p>注意到，每个文件信息的最左边一栏，是各种文件类型的缩写，从上到下依次是：<br>   -（regular）普通文件<br>   d（directory）目录文件<br>   p（pipe）管道文件（命名管道）<br>   s（socket）套接字文件（Unix域&#x2F;本地域套接字）<br>   l（link）链接文件（软链接）<br>   c（character）字符设备文件<br>   b（block）块设备文件</p><h2 id="系统IO与标准IO"><a href="#系统IO与标准IO" class="headerlink" title="系统IO与标准IO"></a>系统IO与标准IO</h2><p>对文件的操作，基本上就是输入输出，因此也一般称为IO接口。在操作系统的层面上，这一组专门针对文件的IO接口就被称为系统IO；在标准库的层面上，这一组专门针对文件的IO接口就被称为标准IO<br>&lt;img src&#x3D;”&#x2F;linux_io_img&#x2F;系统io和标准io.png&gt;</img></p><pre><code>系统IO：是众多系统调用当中专用于文件操作的一部分接口。标准IO：是众多标准函数当中专用于文件操作的一部分接口。从图中还能看到，标准IO实际上是对系统IO的封装，系统IO是更接近底层的接口。如果把系统IO比喻为菜市场，提供各式肉蛋菜果蔬，那么标准IO就是对这些基本原来的进一步封装，是品类和功能更加丰富的各类酒庄饭店。</code></pre><h2 id="系统IO与标准IO的区别"><a href="#系统IO与标准IO的区别" class="headerlink" title="系统IO与标准IO的区别"></a>系统IO与标准IO的区别</h2><p>   系统IO是操作系统内核提供的接口，而标准IO是C标准库提供的接口。<br>   系统IO的接口函数名以“read”和“write”开头，而标准IO的接口函数名以“fread”和“fwrite”开头。<br>   系统IO的接口函数以“int”为返回值类型，而标准IO的接口函数以“size_t”为返回值类型。<br>   系统IO的接口函数以“文件描述符”为第一个参数，而标准IO的接口函数以“文件指针”为第一个参数。<br>   系统IO的接口函数以“文件偏移量”为第三个参数，而标准IO的接口函数以“文件指针位置”为第三个参数。<br>   系统IO的接口函数以“文件描述符”为第一个参数，而标准IO的接口函数以“文件指针”为第一个参数。<br>   系统IO的接口函数以“文件偏移量”为第三个参数，而标准IO的接口函数以“文件指针位置”为第三个参数。</p><h2 id="如何选择系统IO与标准IO"><a href="#如何选择系统IO与标准IO" class="headerlink" title="如何选择系统IO与标准IO"></a>如何选择系统IO与标准IO</h2><p>系统IO</p><pre><code>由操作系统直接提供的函数接口，特点是简洁，功能单一没有提供缓冲区，因此对海量数据的操作效率较低套接字Socket、设备文件的访问只能使用系统IO</code></pre><p>标准IO</p><pre><code>由标准C库提供的函数接口，特点是功能丰富有提供缓冲区，因此对海量数据的操作效率高编程开发中尽量选择标准IO，但许多场合只能用系统IO</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>循环链表</title>
       <link href="/2024/07/22/%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8/"/>
       <url>/2024/07/22/%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8/</url>
