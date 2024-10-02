@@ -346,4 +346,80 @@ document.addEventListener('pjax:error', e => {
   else if (epage === cpage){
     butterfly_clock_anzhiyu_injector_config();
   }
-  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+  </script>
+  <script src="https://unpkg.com/oh-my-live2d@latest"></script>
+<script>
+  OML2D.loadOml2d({
+    dockedPosition: "left",
+    models: [
+      {
+        name: 'HK416-2',
+        path: 'https://model.oml2d.com/HK416-2-normal/model.json',
+        position: [0,60],
+        scale: 0.08,
+        stageStyle: {
+          height: 400
+        }
+      },
+      //符玄
+      {
+        name: '符玄',
+        path: 'https://model.kisssssssss.space/https://raw.githubusercontent.com/kisssssssss/model/main/live2d/StarRail/%E7%AC%A6%E7%8E%84/%E7%AC%A6%E7%8E%84.model3.json',
+        position: [0,60],
+        scale: 0.08,
+        stageStyle: {
+          height: 400
+        }
+      },
+      // 知更鸟
+      {
+        name: '知更鸟',
+        path: 'https://model.kisssssssss.space/https://raw.githubusercontent.com/kisssssssss/model/main/live2d/StarRail/%E7%9F%A5%E6%9B%B4%E9%B8%9F/%E7%9F%A5%E6%9B%B4%E9%B8%9F.model3.json',
+        position: [0,60],
+        scale: 0.08,
+        stageStyle: {
+          height: 400
+        }
+      },
+      // 花火
+      {
+        name: '花火',
+        path: 'https://model.kisssssssss.space/https://raw.githubusercontent.com/kisssssssss/model/main/live2d/StarRail/%E8%8A%B1%E7%81%AB/%E8%8A%B1%E7%81%AB.model3.json',
+        position: [0,60],
+        scale: 0.08,
+        stageStyle: {
+          height: 400
+        }
+      },
+      // 霍霍
+      {
+        name: '霍霍',
+        path: 'https://model.kisssssssss.space/https://raw.githubusercontent.com/kisssssssss/model/main/live2d/StarRail/%E8%97%BF%E8%97%BF/%E8%97%BF%E8%97%BF.model3.json',
+        position: [0,60],
+        scale: 0.08,
+        stageStyle: {
+          height: 400
+        }
+      },
+      // 镜流
+      {
+        name: '镜流',
+        path: 'https://model.kisssssssss.space/https://raw.githubusercontent.com/kisssssssss/model/main/live2d/StarRail/%E9%95%9C%E6%B5%81/%E9%95%9C%E6%B5%81.model3.json',
+        position: [0,60],
+        scale: 0.15,
+        stageStyle: {
+          height: 400
+        }
+      },
+    ],
+    tips: {
+    idleTips: {
+      wordTheDay(wordTheDayData) {
+        return `${wordTheDayData.hitokoto}    by.${wordTheDayData.from}`;
+      }
+    }
+  },
+  });
+</script>
+  
+  <script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
