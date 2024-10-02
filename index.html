@@ -366,7 +366,14 @@ document.addEventListener('pjax:error', e => {
           height: 480
         }
       },
-    ]
+    ],
+    tips: {
+    idleTips: {
+      wordTheDay(wordTheDayData) {
+        return `${wordTheDayData.hitokoto}    by.${wordTheDayData.from}`;
+      }
+    }
+  },
   });
 </script>
   
