@@ -2,15 +2,6 @@
 OML2D.loadOml2d({
   dockedPosition: "left",
   models: [
-    //22娘
-    {
-      path: '/StarRail/22high/fuxuan.model3.json',
-      position: [0,60],
-      scale: 0.05,
-      stageStyle: {
-        height: 400
-      }
-    },
     //符玄
     {
       path: '/StarRail/fuxuan/fuxuan.model3.json',
@@ -20,9 +11,9 @@ OML2D.loadOml2d({
         height: 400
       }
     },
-    // 知更鸟
+    // 卡夫卡
     {
-      path: '/StarRail/知更鸟/知更鸟.model3.json',
+      path: '/StarRail/卡夫卡/卡夫卡.model3.json',
       position: [0,60],
       scale: 0.05,
       stageStyle: {
